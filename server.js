@@ -3,11 +3,15 @@ const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path'); // Import path module
 
 // Initialize express app
 const app = express();
 app.use(cors());
 app.use(bodyParser.json()); // Parse JSON data in the body of requests
+
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public'))); // Ensure your index.html is in the 'public' directory
 
 // MySQL Database connection
 const db = mysql.createConnection({
@@ -28,7 +32,7 @@ db.connect((err) => {
 
 // Simple route to check server status
 app.get('/', (req, res) => {
-    res.send('Hello! Node.js server is running.');
+    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Serve index.html on root route
 });
 
 // API to store date confirmation (Yes/No)
@@ -74,7 +78,7 @@ app.post('/submit-meal', (req, res) => {
 });
 
 // Set the port for the server to run
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // Use environment variable for PORT
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });

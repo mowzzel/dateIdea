@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Go On a Date With Me?</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="valentine-title">Will you go on a date with me? 💖</h1>
+        <div class="mt-4">
+            <button id="yes" class="btn btn-success btn-lg mx-2" onclick="handleAnswer(true)">Yes 💕</button>
+            <button id="no" class="btn btn-danger btn-lg mx-2" onclick="handleAnswer(false)">No 😢</button>
+        </div>
+    </div>
+
+   <script>
+    function handleAnswer(isYes) {
+        const wantsDate = isYes;
+
+        fetch('http://localhost:3000/submit-answer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ wantsDate })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (isYes) {
+                localStorage.setItem('responseId', data.id); // Save the response ID to use later
+                window.location.href = 'date-time.html'; // Redirect to date-time page
+            } else {
+                alert("That's okay, maybe another time! 😊");
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

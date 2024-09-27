@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick a Date and Time</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="valentine-title">When are you free for our date? 🌹</h1>
+        <div class="row justify-content-center mt-4">
+            <div class="col-6">
+                <label for="date" class="form-label">Choose a date:</label>
+                <input type="date" id="date" class="form-control" name="date">
+            </div>
+            <div class="col-6">
+                <label for="time" class="form-label">Choose a time:</label>
+                <input type="time" id="time" class="form-control" name="time">
+            </div>
+        </div>
+        <div class="mt-4">
+            <button class="btn btn-primary btn-lg" onclick="submitDateTime()">Next ➡️</button>
+        </div>
+    </div>
+
+    <script>
+    function submitDateTime() {
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+        const responseId = localStorage.getItem('responseId');
+
+        if (date && time) {
+            fetch('http://localhost:3000/submit-date-time', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: responseId, date, time })
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = 'meal-selection.html'; // Redirect to meal selection page
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        } else {
+            alert('Please select both date and time.');
+        }
+    }
+</script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

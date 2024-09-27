@@ -1,0 +1,32 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffe6f0;
+}
+
+.valentine-title {
+    color: #d63384;
+    font-family: 'Cursive', sans-serif;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+button {
+    border-radius: 30px;
+    padding: 15px 30px;
+}
+
+.meal-btn {
+    font-size: 1.5em;
+}
+
+h1, label {
+    color: #d63384;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+

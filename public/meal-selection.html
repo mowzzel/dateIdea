@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Do You Want to Eat?</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="valentine-title">What do you want to eat on our date? 🍽️</h1>
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-4">
+                <button class="btn btn-outline-danger btn-lg meal-btn" onclick="selectMeal('Pizza')">🍕 Pizza</button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-outline-danger btn-lg meal-btn" onclick="selectMeal('Sushi')">🍣 Sushi</button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-outline-danger btn-lg meal-btn" onclick="selectMeal('Pasta')">🍝 Pasta</button>
+            </div>
+            <div class="col-md-4 mt-3">
+                <button class="btn btn-outline-danger btn-lg meal-btn" onclick="selectMeal('Steak')">🥩 Steak</button>
+            </div>
+            <div class="col-md-4 mt-3">
+                <button class="btn btn-outline-danger btn-lg meal-btn" onclick="selectMeal('Ramen')">🍜 Ramen</button>
+            </div>
+            <div class="col-md-4 mt-3">
+                <button class="btn btn-outline-danger btn-lg meal-btn" onclick="selectMeal('Rice')">🍚 Rice</button>
+            </div>
+        </div>
+        <div class="mt-4">
+            <button class="btn btn-primary btn-lg" onclick="finish()">Finish 💖</button>
+        </div>
+    </div>
+
+    <script>
+        function selectMeal(meal) {
+            const responseId = localStorage.getItem('responseId');
+            localStorage.setItem('meal', meal);
+            fetch('http://localhost:3000/submit-meal', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: responseId, mealChoice: meal })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert(`${meal} selected!`);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function finish() {
+            const date = localStorage.getItem('date');
+            const time = localStorage.getItem('time');
+            const meal = localStorage.getItem('meal');
+            alert(`Your date is set for ${date} at ${time}, and you'll be eating ${meal}. 💕`);
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
